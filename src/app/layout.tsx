@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <nav className="w-full flex justify-center gap-8 py-6 text-lg font-semibold bg-transparent">
           <ThemeToggle />
