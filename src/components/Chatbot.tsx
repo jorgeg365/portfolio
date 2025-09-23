@@ -168,7 +168,7 @@ export default function Chatbot() {
       {open && (
         <div className="fixed bottom-24 right-6 z-50 w-[90vw] max-w-sm rounded-xl border border-white/10 bg-gray-900/90 text-white shadow-2xl backdrop-blur p-3 flex flex-col">
           <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="font-semibold">Ask Jorge's Assistant</div>
+            <div className="font-semibold">Ask Jorge&apos;s Assistant</div>
             <button className="text-sm opacity-70 hover:opacity-100" onClick={() => setOpen(false)} aria-label="Close">Close</button>
           </div>
 

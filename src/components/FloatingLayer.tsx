@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type CpuSprite = {
   id: number;
@@ -50,7 +50,7 @@ function generateSprites(count = 10): CpuSprite[] {
 }
 
 export default function FloatingLayer() {
-  const [enabled, setEnabled] = useState(true);
+  const [enabled] = useState(true);
   const [sprites, setSprites] = useState<CpuSprite[] | null>(null);
   const mouseRef = useRef<HTMLDivElement | null>(null);
 

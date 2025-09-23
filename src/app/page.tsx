@@ -1,4 +1,4 @@
-import Link from "next/link";
+// removed unused Link import
 import Image from "next/image";
 import ContactForm from "../components/ContactForm";
 

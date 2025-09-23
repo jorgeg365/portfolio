@@ -5,7 +5,7 @@ import ThemeToggle from "../components/ThemeToggle";
 import FloatingLayer from "../components/FloatingLayer";
 import Link from "next/link";
 import Script from "next/script";
-import Image from "next/image";
+// removed unused Image import
 import Chatbot from "../components/Chatbot";
 
 const geistSans = Geist({

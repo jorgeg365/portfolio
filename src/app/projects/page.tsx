@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function Projects() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center font-sans p-8">
@@ -14,7 +15,9 @@ export default function Projects() {
         {/* T-Pot Honeypot Installation Guide Project Card */}
         <div id="project-tpot" className="rounded-lg p-6 shadow-md" style={{ background: "rgba(17,35,90,0.7)" }}>
           <div className="w-full mb-6 flex justify-center">
-            <img src="/tpotlogo-1.png" alt="T-Pot Logo" className="h-36 sm:h-40 md:h-48 lg:h-56 w-auto object-contain" />
+            <div className="relative" style={{ height: 224, width: 224 }}>
+              <Image src="/tpotlogo-1.png" alt="T-Pot Logo" fill sizes="(max-width: 640px) 200px, 224px" className="object-contain" />
+            </div>
           </div>
           <h2 className="text-xl font-semibold mb-2">T-Pot Honeypot Installation Guide (Ubuntu Server 24.04 LTS)</h2>
           <p className="mb-2">A comprehensive guide to installing and configuring the T-Pot honeypot platform on Ubuntu Server 24.04 LTS, integrating multiple honeypot tools with the ELK Stack for powerful threat analysis and visualization.</p>
