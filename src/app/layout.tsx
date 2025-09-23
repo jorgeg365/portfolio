@@ -5,6 +5,8 @@ import ThemeToggle from "../components/ThemeToggle";
 import FloatingLayer from "../components/FloatingLayer";
 import Link from "next/link";
 import Script from "next/script";
+import Image from "next/image";
+import Chatbot from "../components/Chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +52,7 @@ export default function RootLayout({
           <ThemeToggle />
         </nav>
         {children}
+        <Chatbot />
       </body>
     </html>
   );

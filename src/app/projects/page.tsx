@@ -12,13 +12,16 @@ export default function Projects() {
       </a>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {/* T-Pot Honeypot Installation Guide Project Card */}
-        <div className="rounded-lg p-6 shadow-md" style={{ background: "rgba(17,35,90,0.7)" }}>
+        <div id="project-tpot" className="rounded-lg p-6 shadow-md" style={{ background: "rgba(17,35,90,0.7)" }}>
+          <div className="w-full mb-6 flex justify-center">
+            <img src="/tpotlogo-1.png" alt="T-Pot Logo" className="h-36 sm:h-40 md:h-48 lg:h-56 w-auto object-contain" />
+          </div>
           <h2 className="text-xl font-semibold mb-2">T-Pot Honeypot Installation Guide (Ubuntu Server 24.04 LTS)</h2>
           <p className="mb-2">A comprehensive guide to installing and configuring the T-Pot honeypot platform on Ubuntu Server 24.04 LTS, integrating multiple honeypot tools with the ELK Stack for powerful threat analysis and visualization.</p>
           <a href="https://github.com/jorgeg365/T-Pot-Honeypot-Installation-Guide-Ubuntu-Server-24.04-LTS-" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:underline">View on GitHub</a>
         </div>
         {/* GoPhish Phishing Campaign Project Card */}
-        <div className="rounded-lg p-6 shadow-md" style={{ background: "rgba(17,35,90,0.7)" }}>
+        <div id="project-gophish" className="rounded-lg p-6 shadow-md" style={{ background: "rgba(17,35,90,0.7)" }}>
           <h2 className="text-xl font-semibold mb-2">GoPhish Phishing Campaign with Mailhog Local Testing on Ubuntu VM</h2>
           <p className="mb-2">A step-by-step project for setting up a local phishing lab using GoPhish and MailHog on an Ubuntu VM. This guide covers installation, configuration, and running realistic phishing campaigns in a safe environment.</p>
           <a href="https://github.com/jorgeg365/jorgeg365-GoPhish-phishing-Campaign-with-Mailhog-local-testing-on-Ubuntu-VM" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:underline">View on GitHub</a>

@@ -29,6 +29,11 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+/* Smooth scrolling for in-page anchors */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Flying animation */
 @keyframes flyAcross {
   0% { transform: translateX(-10vw); }
