@@ -1,9 +1,7 @@
-"use client";
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import React, { useState } from "react";
+import ThemeToggle from "../components/ThemeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,22 +23,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [darkMode, setDarkMode] = React.useState(true);
-
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased ${darkMode ? "dark" : "light"}`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
         <nav className="w-full flex justify-center gap-8 py-6 text-lg font-semibold bg-transparent">
-          <button
-            onClick={() => setDarkMode((d) => !d)}
-            className="px-4 py-2 rounded bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200 transition-colors"
-            style={{ position: "absolute", right: 24 }}
-            aria-label="Toggle dark/light mode"
-          >
-            {darkMode ? "🌙 Dark" : "☀️ Light"}
-          </button>
+          <ThemeToggle />
         </nav>
         {children}
       </body>
