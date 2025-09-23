@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a174e] text-white font-sans p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center font-sans p-8">
       <h1 className="text-3xl sm:text-4xl font-bold mb-4">Contact</h1>
       <p className="mb-4 text-lg">Feel free to reach out to me via the following platforms:</p>
       <div className="flex gap-6">
