@@ -78,7 +78,9 @@ export default function FloatingLayer() {
     function loop() {
       x += (tx - x) * speed;
       y += (ty - y) * speed;
-      el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      if (el) {
+        el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      }
       raf = requestAnimationFrame(loop);
     }
 
