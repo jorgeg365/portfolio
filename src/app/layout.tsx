@@ -4,6 +4,7 @@ import "./globals.css";
 import ThemeToggle from "../components/ThemeToggle";
 import FloatingLayer from "../components/FloatingLayer";
 import Link from "next/link";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <Script id="theme-init" strategy="beforeInteractive">{`
+          (function(){
+            try {
+              var c = document.documentElement.classList;
+              if(!c.contains('dark') && !c.contains('light')) { c.add('dark'); }
+            } catch (e) {}
+          })();
+        `}</Script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
