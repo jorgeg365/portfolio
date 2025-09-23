@@ -28,3 +28,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   transition: background 0.3s, color 0.3s;
 }
+
+/* Flying animation */
+@keyframes flyAcross {
+  0% { transform: translateX(-10vw); }
+  100% { transform: translateX(110vw); }
+}
+.animate-fly {
+  animation-name: flyAcross;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.animate-fly.reverse {
+  animation-direction: reverse;
+}
