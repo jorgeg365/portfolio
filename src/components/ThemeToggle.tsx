@@ -6,11 +6,11 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     if (darkMode) {
-      document.body.classList.add("dark");
-      document.body.classList.remove("light");
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
     } else {
-      document.body.classList.add("light");
-      document.body.classList.remove("dark");
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
     }
   }, [darkMode]);
 
