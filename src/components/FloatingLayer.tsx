@@ -95,7 +95,7 @@ export default function FloatingLayer() {
   if (!enabled) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-30">
+    <div className="pointer-events-none fixed inset-0 z-10">
       {/* CPU sprites: render only after mount */}
       {sprites?.map((s) => (
         <div

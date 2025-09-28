@@ -45,10 +45,12 @@ export default function RootLayout({
       >
         <FloatingLayer />
         <nav className="w-full flex items-center justify-center gap-8 py-6 text-lg font-semibold bg-transparent relative z-50">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/contact">Contact</Link>
+          <div className="flex items-center gap-8 border-b-4 border-white/10 pb-6">
+            <Link href="/">Home</Link>
+            <Link href="/about">About</Link>
+            <Link href="/projects">Projects</Link>
+            <Link href="/contact">Contact</Link>
+          </div>
           <ThemeToggle />
         </nav>
         {children}
