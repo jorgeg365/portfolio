@@ -3,12 +3,12 @@ import Image from "next/image";
 export default function Contact() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center font-sans p-8 relative z-20">
-      <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] mb-8 relative z-20">
+      <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[28rem] xl:h-[28rem] mb-8 relative z-20 overflow-hidden rounded-3xl border border-white/20 shadow-[0_18px_40px_rgba(0,0,0,0.28)]">
         <Image
           src="/contact.png"
           alt="Contact icon"
           fill
-          className="object-contain"
+          className="object-cover"
           priority
         />
       </div>
