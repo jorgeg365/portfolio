@@ -1,24 +1,203 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+type ActionId =
+  | "start"
+  | "about"
+  | "projects"
+  | "tools"
+  | "contact"
+  | "tpot"
+  | "gophish"
+  | "github"
+  | "linkedin"
+  | "email";
+
+type ChatAction = {
+  id: ActionId;
+  label: string;
+};
 
 type Message = {
   id: string;
-  role: "user" | "assistant";
   text: string;
+  actions?: ChatAction[];
 };
+
+const assistantName = "Jorge's Guide";
+
+function buildMessage(text: string, actions?: ChatAction[]): Message {
+  return {
+    id: crypto.randomUUID(),
+    text,
+    actions,
+  };
+}
+
+function openForAction(actionId: ActionId) {
+  if (actionId === "about") {
+    window.location.href = "/about";
+    return;
+  }
+
+  if (actionId === "projects") {
+    window.location.href = "/projects";
+    return;
+  }
+
+  if (actionId === "contact") {
+    window.location.href = "/contact";
+    return;
+  }
+
+  if (actionId === "tpot") {
+    window.location.href = "/projects#project-tpot";
+    return;
+  }
+
+  if (actionId === "gophish") {
+    window.location.href = "/projects#project-gophish";
+    return;
+  }
+
+  if (actionId === "github") {
+    window.open("https://github.com/jorgeg365", "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  if (actionId === "linkedin") {
+    window.open("https://www.linkedin.com/in/jorge-grullon-8673182b9/", "_blank", "noopener,noreferrer");
+    return;
+  }
+
+  if (actionId === "email") {
+    window.location.href = "mailto:jorgeagrullon@gmail.com?subject=Portfolio%20Inquiry";
+  }
+}
+
+function getResponseForAction(actionId: ActionId): Message {
+  if (actionId === "start") {
+    return buildMessage(
+      "Welcome. I can guide you through Jorge's portfolio. Choose a section below.",
+      [
+        { id: "about", label: "About Jorge" },
+        { id: "projects", label: "View Projects" },
+        { id: "tools", label: "Skills & Tools" },
+        { id: "contact", label: "Contact" },
+      ]
+    );
+  }
+
+  if (actionId === "about") {
+    openForAction("about");
+    return buildMessage(
+      "The About page covers Jorge's background in IT and cybersecurity, his education, and hands-on experience with homelab, networking, virtualization, and security projects.",
+      [
+        { id: "tools", label: "Show Tools" },
+        { id: "projects", label: "See Projects" },
+        { id: "contact", label: "Get in Touch" },
+      ]
+    );
+  }
+
+  if (actionId === "projects") {
+    openForAction("projects");
+    return buildMessage(
+      "The Projects page highlights Jorge's cybersecurity and lab work. You can jump straight to a featured project below.",
+      [
+        { id: "tpot", label: "T-Pot Honeypot" },
+        { id: "gophish", label: "GoPhish Lab" },
+        { id: "github", label: "GitHub Profile" },
+      ]
+    );
+  }
+
+  if (actionId === "tools") {
+    openForAction("about");
+    return buildMessage(
+      "Jorge works with tools including Wireshark, Kali, Ubuntu, Windows Server, Proxmox, Cisco, Splunk, Nmap, Burp Suite, and WireGuard. You can see them in the About section.",
+      [
+        { id: "about", label: "Open About" },
+        { id: "projects", label: "Project Examples" },
+      ]
+    );
+  }
+
+  if (actionId === "contact") {
+    openForAction("contact");
+    return buildMessage(
+      "You can reach Jorge from the Contact page or use one of these direct options.",
+      [
+        { id: "email", label: "Email Jorge" },
+        { id: "linkedin", label: "LinkedIn" },
+        { id: "github", label: "GitHub" },
+      ]
+    );
+  }
+
+  if (actionId === "tpot") {
+    openForAction("tpot");
+    return buildMessage(
+      "Opening the T-Pot honeypot project. This project focuses on deploying a honeypot stack on Ubuntu Server with ELK for threat visibility.",
+      [
+        { id: "gophish", label: "Next Project" },
+        { id: "contact", label: "Contact Jorge" },
+      ]
+    );
+  }
+
+  if (actionId === "gophish") {
+    openForAction("gophish");
+    return buildMessage(
+      "Opening the GoPhish lab project. This walkthrough shows a local phishing testing setup using GoPhish and MailHog in a controlled Ubuntu VM environment.",
+      [
+        { id: "tpot", label: "Other Project" },
+        { id: "contact", label: "Contact Jorge" },
+      ]
+    );
+  }
+
+  if (actionId === "github") {
+    openForAction("github");
+    return buildMessage(
+      "Opening Jorge's GitHub profile in a new tab.",
+      [
+        { id: "projects", label: "Back to Projects" },
+        { id: "contact", label: "Contact Jorge" },
+      ]
+    );
+  }
+
+  if (actionId === "linkedin") {
+    openForAction("linkedin");
+    return buildMessage(
+      "Opening Jorge's LinkedIn profile in a new tab.",
+      [
+        { id: "contact", label: "Contact Page" },
+        { id: "about", label: "About Jorge" },
+      ]
+    );
+  }
+
+  openForAction("email");
+  return buildMessage(
+    "Opening an email draft to Jorge.",
+    [
+      { id: "projects", label: "View Projects" },
+      { id: "about", label: "About Jorge" },
+    ]
+  );
+}
 
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const [pendingAction, setPendingAction] = useState<null | "mailto">(null);
 
   useEffect(() => {
     if (open && messages.length === 0) {
-      const greeting = "Hi! I'm Jorge's assistant. I can introduce Jorge, guide you to projects, resume, or contact info, and answer FAQs. What would you like to see?";
-      setMessages([{ id: crypto.randomUUID(), role: "assistant", text: greeting }]);
+      setMessages([getResponseForAction("start")]);
     }
   }, [open, messages.length]);
 
@@ -26,187 +205,98 @@ export default function Chatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
-  const quickPrompts = useMemo(
-    () => [
-      "Who is Jorge?",
-      "Show projects",
-      "View resume",
-      "How to contact?",
-      "Cybersecurity work",
-    ],
-    []
-  );
-
-  function navigateForIntent(intent: string) {
-    // Use Next.js client-side navigation via location for same-site anchors and paths
-    if (intent === "projects") {
-      window.location.href = "/projects";
-    } else if (intent === "contact") {
-      // Go to home contact section
-      window.location.href = "/#contact";
-    } else if (intent === "about" || intent === "resume") {
-      window.location.href = "/about";
-    } else if (intent === "project-tpot") {
-      window.location.href = "/projects#project-tpot";
-    } else if (intent === "project-gophish") {
-      window.location.href = "/projects#project-gophish";
-    }
+  function handleAction(actionId: ActionId) {
+    const nextMessage = getResponseForAction(actionId);
+    setMessages((prev) => [...prev, nextMessage]);
   }
 
-  function openEmailDraft() {
-    const subject = encodeURIComponent("Portfolio inquiry");
-    const body = encodeURIComponent("Hi Jorge,\n\nI saw your portfolio and would like to connect.\n\nThanks,");
-    window.location.href = `mailto:jorgeagrullon@gmail.com?subject=${subject}&body=${body}`;
-  }
-
-  function respond(userText: string): string {
-    const t = userText.toLowerCase();
-
-    // Handle pending confirmations first
-    if (pendingAction === "mailto") {
-      if (/(^|\b)(yes|yep|yeah|sure|please|ok|okay|do it|go ahead)(\b|$)/.test(t)) {
-        setPendingAction(null);
-        setTimeout(() => openEmailDraft(), 150);
-        return "Opening an email draft to Jorge...";
-      }
-      if (/(^|\b)(no|nope|not now|later|cancel|stop)(\b|$)/.test(t)) {
-        setPendingAction(null);
-        return "No problem — you can use the contact form below or ask me anytime.";
-      }
-      // If unclear, re-prompt
-      return "Would you like me to open an email draft to Jorge now? (yes/no)";
-    }
-    // Intro / elevator pitch
-    if (/(who.*jorge|introduce|about (you|jorge)|who are you)/.test(t)) {
-      return "Jorge Grullon is a full‑stack developer with a focus on clean, performant web apps and security projects. This portfolio highlights selected projects, experience, and ways to get in touch.";
-    }
-    // Navigation
-    if (/project|portfolio|work|show project/.test(t)) {
-      navigateForIntent("projects");
-      return "Taking you to Projects. Want a summary of T‑Pot or GoPhish?";
-    }
-    if (/resume|cv/.test(t)) {
-      navigateForIntent("resume");
-      return "Opening the About/Resume page. Want highlights here as well?";
-    }
-    if (/(contact|email|reach|hire)/.test(t)) {
-      navigateForIntent("contact");
-      return "Taking you to the Contact section. You can use the form below or ask me to open an email draft to Jorge.";
-    }
-    // FAQs
-    if (/background|experience/.test(t)) {
-      return "Background: hands‑on full‑stack development and security‑focused projects (e.g., T‑Pot honeypot setup, GoPhish lab). Comfortable with TypeScript/Next.js, APIs, and cloud tooling.";
-    }
-    if (/technolog|tech stack|tools|stack/.test(t)) {
-      return "Tech stack includes TypeScript, Next.js/React, Node.js, Tailwind CSS, and experience with Linux, Docker, and security tooling.";
-    }
-    if (/freelance|collaborat|open to work|opportunities?/.test(t)) {
-      return "Jorge is open to interesting freelance or collaboration opportunities. Share what you have in mind and a way to contact you.";
-    }
-    // Project specifics
-    if (/cybersec|security|honeypot|t-?pot/.test(t)) {
-      navigateForIntent("project-tpot");
-      return "Opening the T‑Pot honeypot project. Quick summary: step‑by‑step installation on Ubuntu 24.04 LTS with ELK integration.";
-    }
-    if (/gophish|phishing|mailhog/.test(t)) {
-      navigateForIntent("project-gophish");
-      return "Opening the GoPhish + Mailhog local testing lab project.";
-    }
-    if (/best project|favorite project|highlight/.test(t)) {
-      return "Popular picks include the T‑Pot Honeypot Installation Guide and a GoPhish + Mailhog local testing lab. Ask for either and I'll take you there.";
-    }
-    // Default
-    return "I can help with projects, resume, or contact info. Try: ‘Show projects’, ‘View resume’, or ‘How to contact?’";
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const trimmed = input.trim();
-    if (!trimmed) return;
-    const userMsg: Message = { id: crypto.randomUUID(), role: "user", text: trimmed };
-    const reply: Message = { id: crypto.randomUUID(), role: "assistant", text: respond(trimmed) };
-    setMessages((prev) => [...prev, userMsg, reply]);
-    setInput("");
-  }
-
-  function handleQuick(prompt: string) {
-    const userMsg: Message = { id: crypto.randomUUID(), role: "user", text: prompt };
-    setMessages((prev) => [...prev, userMsg]);
-    if (prompt === "How to contact?") {
-      navigateForIntent("contact");
-      setPendingAction("mailto");
-      const ask: Message = {
-        id: crypto.randomUUID(),
-        role: "assistant",
-        text: "Taking you to the Contact section. Would you like me to open an email draft to Jorge now? (yes/no)",
-      };
-      setMessages((prev) => [...prev, ask]);
-      return;
-    }
-    const reply: Message = { id: crypto.randomUUID(), role: "assistant", text: respond(prompt) };
-    setMessages((prev) => [...prev, reply]);
-  }
-
-  function handleCaptureContact() {
-    const subject = encodeURIComponent("Portfolio inquiry from chatbot");
-    const body = encodeURIComponent("Hi Jorge, I'd like to connect.\n\n— Sent from the site chatbot");
-    window.location.href = `mailto:jorgeagrullon@gmail.com?subject=${subject}&body=${body}`;
+  function resetGuide() {
+    setMessages([getResponseForAction("start")]);
   }
 
   return (
     <>
-      {/* Toggle button */}
       <button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-lg transition-colors"
-        aria-label={open ? "Close chat" : "Open chat"}
+        onClick={() => setOpen((value) => !value)}
+        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-transform duration-200 hover:scale-110"
+        aria-label={open ? "Close guide" : "Open guide"}
       >
-        {open ? "✕" : "💬"}
+        {open ? (
+          <span className="flex h-14 w-14 items-center justify-center rounded-full bg-slate-900 text-xl font-semibold text-white">
+            X
+          </span>
+        ) : (
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="32" fill="#0F1B58" />
+            <path d="M18 51c2.6-8.9 11.1-13.4 14-13.4S43.4 42.1 46 51" fill="#F5F7FB" />
+            <circle cx="32" cy="22" r="3.2" fill="#F5F7FB" />
+            <path d="M32 24.8v6.2" stroke="#F5F7FB" strokeWidth="2.6" strokeLinecap="round" />
+            <rect x="17.5" y="24" width="29" height="19" rx="9.5" fill="#F5F7FB" />
+            <rect x="21.5" y="27.5" width="21" height="11" rx="5.5" fill="#14204F" />
+            <circle cx="28" cy="33" r="2.3" fill="#48E7FF" />
+            <circle cx="36" cy="33" r="2.3" fill="#48E7FF" />
+            <rect x="13.5" y="29" width="5" height="9" rx="2.5" fill="#F5F7FB" />
+            <rect x="45.5" y="29" width="5" height="9" rx="2.5" fill="#F5F7FB" />
+            <path d="M40 9.5h11.5c2.5 0 4.5 2 4.5 4.5v5.5c0 2.5-2 4.5-4.5 4.5H45l-4 4v-4H40c-2.5 0-4.5-2-4.5-4.5V14c0-2.5 2-4.5 4.5-4.5Z" fill="#4FE7FF" />
+            <path d="M43.3 16.8h2.5M47.3 16.8h2.5" stroke="#0F1B58" strokeWidth="2.4" strokeLinecap="round" />
+          </svg>
+        )}
       </button>
 
-      {/* Panel */}
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 w-[90vw] max-w-sm rounded-xl border border-white/10 bg-gray-900/90 text-white shadow-2xl backdrop-blur p-3 flex flex-col">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <div className="font-semibold">Ask Jorge&apos;s Assistant</div>
-            <button className="text-sm opacity-70 hover:opacity-100" onClick={() => setOpen(false)} aria-label="Close">Close</button>
+        <div className="fixed bottom-24 right-6 z-50 flex w-[90vw] max-w-sm flex-col overflow-hidden rounded-2xl border border-white/10 bg-slate-950/92 text-white shadow-2xl backdrop-blur">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+            <div>
+              <div className="text-sm font-semibold">{assistantName}</div>
+              <div className="text-xs text-white/60">Portfolio navigation assistant</div>
+            </div>
+            <button
+              className="text-sm text-white/70 transition-opacity hover:text-white"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+            >
+              Close
+            </button>
           </div>
 
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            {quickPrompts.map((q) => (
-              <button key={q} onClick={() => handleQuick(q)} className="text-left text-sm px-3 py-2 rounded-md bg-white/5 hover:bg-white/10">
-                {q}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-3 flex-1 min-h-[160px] max-h-64 overflow-y-auto pr-1 space-y-2">
-            {messages.map((m) => (
-              <div key={m.id} className={`text-sm leading-relaxed ${m.role === "user" ? "text-blue-300" : "text-gray-100"}`}>
-                {m.role === "user" ? "You: " : "Assistant: "}
-                {m.text}
+          <div className="max-h-[26rem] space-y-3 overflow-y-auto px-4 py-4">
+            {messages.map((message) => (
+              <div key={message.id} className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                <p className="text-sm leading-6 text-white/90">{message.text}</p>
+                {message.actions && message.actions.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {message.actions.map((action) => (
+                      <button
+                        key={`${message.id}-${action.id}`}
+                        onClick={() => handleAction(action.id)}
+                        className="rounded-full border border-blue-400/30 bg-blue-500/10 px-3 py-1.5 text-xs font-semibold text-blue-100 transition-colors hover:bg-blue-500/20"
+                      >
+                        {action.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
             <div ref={bottomRef} />
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-2 flex gap-2">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type a message..."
-              className="flex-1 rounded-md bg-white/5 border border-white/10 px-3 py-2 outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button type="submit" className="rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 font-semibold">Send</button>
-          </form>
-
-          <button onClick={handleCaptureContact} className="mt-2 text-xs text-blue-300 hover:underline self-start">
-            Send a message to Jorge via email
-          </button>
+          <div className="flex items-center justify-between border-t border-white/10 px-4 py-3">
+            <button
+              onClick={resetGuide}
+              className="text-xs font-semibold text-blue-200 transition-colors hover:text-white"
+            >
+              Restart guide
+            </button>
+            <button
+              onClick={() => handleAction("contact")}
+              className="rounded-full bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-blue-500"
+            >
+              Contact Jorge
+            </button>
+          </div>
         </div>
       )}
     </>
   );
 }
-
-
