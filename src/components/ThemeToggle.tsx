@@ -75,7 +75,7 @@ export default function ThemeToggle() {
       role="switch"
       aria-checked={darkMode}
       aria-label="Toggle day and night mode"
-      className={`absolute right-6 top-1/2 flex h-12 w-[88px] -translate-y-1/2 items-center rounded-full border px-1.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+      className={`absolute right-6 top-[calc(50%+48px)] flex h-12 w-[88px] -translate-y-1/2 items-center rounded-full border px-1.5 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
         isLight
           ? "border-neutral-200 bg-[#f0efec] text-[#111111] shadow-[0_10px_22px_rgba(0,0,0,0.08)]"
           : "border-black bg-black text-white shadow-[0_12px_28px_rgba(0,0,0,0.28)]"
