@@ -5,6 +5,7 @@ import ThemeToggle from "../components/ThemeToggle";
 import FloatingLayer from "../components/FloatingLayer";
 import Link from "next/link";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 // removed unused Image import
 import Chatbot from "../components/Chatbot";
 
@@ -55,6 +56,7 @@ export default function RootLayout({
         </nav>
         {children}
         <Chatbot />
+        <Analytics />
       </body>
     </html>
   );
