@@ -74,7 +74,7 @@ export default function GlobalAudioPlayer() {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 px-6 text-center text-white backdrop-blur-sm"
         >
           <span className="rounded-full border border-white/30 bg-white/10 px-6 py-4 text-base font-semibold tracking-[0.2em] uppercase">
-            Tap To Start Music
+            Tap To Enter
           </span>
         </button>
       ) : null}
