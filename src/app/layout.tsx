@@ -8,6 +8,7 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 // removed unused Image import
 import Chatbot from "../components/Chatbot";
+import GlobalAudioPlayer from "../components/GlobalAudioPlayer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <FloatingLayer />
+        <GlobalAudioPlayer />
         <nav className="w-full flex items-center justify-center gap-8 py-6 text-lg font-semibold bg-transparent relative z-50">
           <div className="flex items-center gap-8 border-b-4 border-white/10 pb-6">
             <Link href="/">Home</Link>
