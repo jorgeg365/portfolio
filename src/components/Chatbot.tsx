@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ActionId =
   | "start"
@@ -35,47 +36,6 @@ function buildMessage(text: string, actions?: ChatAction[]): Message {
   };
 }
 
-function openForAction(actionId: ActionId) {
-  if (actionId === "about") {
-    window.location.href = "/about";
-    return;
-  }
-
-  if (actionId === "projects") {
-    window.location.href = "/projects";
-    return;
-  }
-
-  if (actionId === "contact") {
-    window.location.href = "/contact";
-    return;
-  }
-
-  if (actionId === "tpot") {
-    window.location.href = "/projects#project-tpot";
-    return;
-  }
-
-  if (actionId === "gophish") {
-    window.location.href = "/projects#project-gophish";
-    return;
-  }
-
-  if (actionId === "github") {
-    window.open("https://github.com/jorgeg365", "_blank", "noopener,noreferrer");
-    return;
-  }
-
-  if (actionId === "linkedin") {
-    window.open("https://www.linkedin.com/in/jorge-grullon-8673182b9/", "_blank", "noopener,noreferrer");
-    return;
-  }
-
-  if (actionId === "email") {
-    window.location.href = "mailto:jorgeagrullon@gmail.com?subject=Portfolio%20Inquiry";
-  }
-}
-
 function getResponseForAction(actionId: ActionId): Message {
   if (actionId === "start") {
     return buildMessage(
@@ -90,7 +50,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "about") {
-    openForAction("about");
     return buildMessage(
       "The About page covers Jorge's background in IT and cybersecurity, his education, and hands-on experience with homelab, networking, virtualization, and security projects.",
       [
@@ -102,7 +61,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "projects") {
-    openForAction("projects");
     return buildMessage(
       "The Projects page highlights Jorge's cybersecurity and lab work. You can jump straight to a featured project below.",
       [
@@ -114,7 +72,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "tools") {
-    openForAction("about");
     return buildMessage(
       "Jorge works with tools including Wireshark, Kali, Ubuntu, Windows Server, Proxmox, Cisco, Splunk, Nmap, Burp Suite, and WireGuard. You can see them in the About section.",
       [
@@ -125,7 +82,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "contact") {
-    openForAction("contact");
     return buildMessage(
       "You can reach Jorge from the Contact page or use one of these direct options.",
       [
@@ -137,7 +93,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "tpot") {
-    openForAction("tpot");
     return buildMessage(
       "Opening the T-Pot honeypot project. This project focuses on deploying a honeypot stack on Ubuntu Server with ELK for threat visibility.",
       [
@@ -148,7 +103,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "gophish") {
-    openForAction("gophish");
     return buildMessage(
       "Opening the GoPhish lab project. This walkthrough shows a local phishing testing setup using GoPhish and MailHog in a controlled Ubuntu VM environment.",
       [
@@ -159,7 +113,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "github") {
-    openForAction("github");
     return buildMessage(
       "Opening Jorge's GitHub profile in a new tab.",
       [
@@ -170,7 +123,6 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "linkedin") {
-    openForAction("linkedin");
     return buildMessage(
       "Opening Jorge's LinkedIn profile in a new tab.",
       [
@@ -180,7 +132,6 @@ function getResponseForAction(actionId: ActionId): Message {
     );
   }
 
-  openForAction("email");
   return buildMessage(
     "Opening an email draft to Jorge.",
     [
@@ -191,6 +142,7 @@ function getResponseForAction(actionId: ActionId): Message {
 }
 
 export default function Chatbot() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -205,7 +157,49 @@ export default function Chatbot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
+  function openForAction(actionId: ActionId) {
+    if (actionId === "about") {
+      router.push("/about");
+      return;
+    }
+
+    if (actionId === "projects") {
+      router.push("/projects");
+      return;
+    }
+
+    if (actionId === "contact") {
+      router.push("/contact");
+      return;
+    }
+
+    if (actionId === "tpot") {
+      router.push("/projects#project-tpot");
+      return;
+    }
+
+    if (actionId === "gophish") {
+      router.push("/projects#project-gophish");
+      return;
+    }
+
+    if (actionId === "github") {
+      window.open("https://github.com/jorgeg365", "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (actionId === "linkedin") {
+      window.open("https://www.linkedin.com/in/jorge-grullon-8673182b9/", "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (actionId === "email") {
+      window.location.href = "mailto:jorgeagrullon@gmail.com?subject=Portfolio%20Inquiry";
+    }
+  }
+
   function handleAction(actionId: ActionId) {
+    openForAction(actionId);
     const nextMessage = getResponseForAction(actionId);
     setMessages((prev) => [...prev, nextMessage]);
   }

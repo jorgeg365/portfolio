@@ -59,7 +59,7 @@ export default function Home() {
           </div>
 
           <div className="relative w-full flex lg:justify-end justify-center">
-            <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden ring-2 ring-white/10 shadow-xl relative z-40">
+            <div className="w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden ring-2 ring-white/10 shadow-xl relative z-40 transition-transform duration-200 ease-out hover:scale-105">
               <Image
                 src="/cropped.jpg"
                 alt="Profile picture of Jorge Grullon"
