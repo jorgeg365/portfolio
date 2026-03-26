@@ -24,8 +24,9 @@ export const metadata: Metadata = {
   title: "Jorge Grullon Portfolio",
   description: "Portfolio of Jorge Grullon",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 
