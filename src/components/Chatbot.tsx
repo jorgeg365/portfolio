@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 type ActionId =
   | "start"
   | "about"
+  | "resume"
   | "projects"
   | "tools"
   | "contact"
@@ -22,26 +23,51 @@ type ChatAction = {
 
 type Message = {
   id: string;
+  role: "assistant" | "user";
   text: string;
   actions?: ChatAction[];
 };
 
 const assistantName = "Jorge's Guide";
 
-function buildMessage(text: string, actions?: ChatAction[]): Message {
+function buildAssistantMessage(text: string, actions?: ChatAction[]): Message {
   return {
     id: crypto.randomUUID(),
+    role: "assistant",
     text,
     actions,
   };
 }
 
+function buildUserMessage(text: string): Message {
+  return {
+    id: crypto.randomUUID(),
+    role: "user",
+    text,
+  };
+}
+
+function getActionLabel(actionId: ActionId): string {
+  if (actionId === "about") return "About Jorge";
+  if (actionId === "resume") return "View Resume";
+  if (actionId === "projects") return "View Projects";
+  if (actionId === "tools") return "Skills & Tools";
+  if (actionId === "contact") return "Contact";
+  if (actionId === "tpot") return "T-Pot Honeypot";
+  if (actionId === "gophish") return "GoPhish Lab";
+  if (actionId === "github") return "GitHub Profile";
+  if (actionId === "linkedin") return "LinkedIn";
+  if (actionId === "email") return "Email Jorge";
+  return "Start";
+}
+
 function getResponseForAction(actionId: ActionId): Message {
   if (actionId === "start") {
-    return buildMessage(
-      "Welcome. I can guide you through Jorge's portfolio. Choose a section below.",
+    return buildAssistantMessage(
+      "Welcome. I can guide you through Jorge's portfolio. Pick a section and I will keep the next steps ready for you.",
       [
         { id: "about", label: "About Jorge" },
+        { id: "resume", label: "View Resume" },
         { id: "projects", label: "View Projects" },
         { id: "tools", label: "Skills & Tools" },
         { id: "contact", label: "Contact" },
@@ -50,9 +76,10 @@ function getResponseForAction(actionId: ActionId): Message {
   }
 
   if (actionId === "about") {
-    return buildMessage(
+    return buildAssistantMessage(
       "The About page covers Jorge's background in IT and cybersecurity, his education, and hands-on experience with homelab, networking, virtualization, and security projects.",
       [
+        { id: "resume", label: "Open Resume" },
         { id: "tools", label: "Show Tools" },
         { id: "projects", label: "See Projects" },
         { id: "contact", label: "Get in Touch" },
@@ -60,81 +87,102 @@ function getResponseForAction(actionId: ActionId): Message {
     );
   }
 
+  if (actionId === "resume") {
+    return buildAssistantMessage(
+      "The Resume page lets you preview Jorge's resume in the browser, open it in a new tab, or download it directly.",
+      [
+        { id: "projects", label: "See Projects" },
+        { id: "about", label: "About Jorge" },
+        { id: "contact", label: "Get in Touch" },
+      ]
+    );
+  }
+
   if (actionId === "projects") {
-    return buildMessage(
+    return buildAssistantMessage(
       "The Projects page highlights Jorge's cybersecurity and lab work. You can jump straight to a featured project below.",
       [
         { id: "tpot", label: "T-Pot Honeypot" },
         { id: "gophish", label: "GoPhish Lab" },
         { id: "github", label: "GitHub Profile" },
+        { id: "resume", label: "View Resume" },
       ]
     );
   }
 
   if (actionId === "tools") {
-    return buildMessage(
+    return buildAssistantMessage(
       "Jorge works with tools including Wireshark, Kali, Ubuntu, Windows Server, Proxmox, Cisco, Splunk, Nmap, Burp Suite, and WireGuard. You can see them in the About section.",
       [
         { id: "about", label: "Open About" },
+        { id: "resume", label: "View Resume" },
         { id: "projects", label: "Project Examples" },
       ]
     );
   }
 
   if (actionId === "contact") {
-    return buildMessage(
+    return buildAssistantMessage(
       "You can reach Jorge from the Contact page or use one of these direct options.",
       [
         { id: "email", label: "Email Jorge" },
         { id: "linkedin", label: "LinkedIn" },
         { id: "github", label: "GitHub" },
+        { id: "resume", label: "View Resume" },
       ]
     );
   }
 
   if (actionId === "tpot") {
-    return buildMessage(
+    return buildAssistantMessage(
       "Opening the T-Pot honeypot project. This project focuses on deploying a honeypot stack on Ubuntu Server with ELK for threat visibility.",
       [
         { id: "gophish", label: "Next Project" },
+        { id: "projects", label: "All Projects" },
+        { id: "resume", label: "View Resume" },
         { id: "contact", label: "Contact Jorge" },
       ]
     );
   }
 
   if (actionId === "gophish") {
-    return buildMessage(
+    return buildAssistantMessage(
       "Opening the GoPhish lab project. This walkthrough shows a local phishing testing setup using GoPhish and MailHog in a controlled Ubuntu VM environment.",
       [
         { id: "tpot", label: "Other Project" },
+        { id: "projects", label: "All Projects" },
+        { id: "resume", label: "View Resume" },
         { id: "contact", label: "Contact Jorge" },
       ]
     );
   }
 
   if (actionId === "github") {
-    return buildMessage(
+    return buildAssistantMessage(
       "Opening Jorge's GitHub profile in a new tab.",
       [
         { id: "projects", label: "Back to Projects" },
+        { id: "resume", label: "View Resume" },
         { id: "contact", label: "Contact Jorge" },
       ]
     );
   }
 
   if (actionId === "linkedin") {
-    return buildMessage(
+    return buildAssistantMessage(
       "Opening Jorge's LinkedIn profile in a new tab.",
       [
         { id: "contact", label: "Contact Page" },
+        { id: "resume", label: "View Resume" },
         { id: "about", label: "About Jorge" },
       ]
     );
   }
 
-  return buildMessage(
+  return buildAssistantMessage(
     "Opening an email draft to Jorge.",
     [
+      { id: "resume", label: "View Resume" },
       { id: "projects", label: "View Projects" },
       { id: "about", label: "About Jorge" },
     ]
@@ -160,6 +208,11 @@ export default function Chatbot() {
   function openForAction(actionId: ActionId) {
     if (actionId === "about") {
       router.push("/about");
+      return;
+    }
+
+    if (actionId === "resume") {
+      router.push("/resume");
       return;
     }
 
@@ -200,8 +253,15 @@ export default function Chatbot() {
 
   function handleAction(actionId: ActionId) {
     openForAction(actionId);
+    const userMessage = buildUserMessage(getActionLabel(actionId));
     const nextMessage = getResponseForAction(actionId);
-    setMessages((prev) => [...prev, nextMessage]);
+    setMessages((prev) => {
+      const clearedActions = prev.map((message) =>
+        message.role === "assistant" ? { ...message, actions: undefined } : message
+      );
+
+      return [...clearedActions, userMessage, nextMessage];
+    });
   }
 
   function resetGuide() {
@@ -255,8 +315,23 @@ export default function Chatbot() {
 
           <div className="max-h-[26rem] space-y-3 overflow-y-auto px-4 py-4">
             {messages.map((message) => (
-              <div key={message.id} className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                <p className="text-sm leading-6 text-white/90">{message.text}</p>
+              <div
+                key={message.id}
+                className={
+                  message.role === "user"
+                    ? "ml-auto w-fit max-w-[85%] rounded-2xl bg-blue-600 px-4 py-2.5 text-right shadow-lg"
+                    : "rounded-2xl border border-white/10 bg-white/5 p-3"
+                }
+              >
+                <p
+                  className={
+                    message.role === "user"
+                      ? "text-sm font-semibold leading-6 text-white"
+                      : "text-sm leading-6 text-white/90"
+                  }
+                >
+                  {message.text}
+                </p>
                 {message.actions && message.actions.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {message.actions.map((action) => (

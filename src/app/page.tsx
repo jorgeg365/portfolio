@@ -83,7 +83,6 @@ export default function Home() {
           <ContactForm />
         </section>
       </main>
-      <footer className="py-4 text-sm opacity-70 text-center relative z-20">Built by Jorge - &copy; {new Date().getFullYear()} <span className="font-bold text-white">Jorge Grullon</span></footer>
     </div>
   );
 }
