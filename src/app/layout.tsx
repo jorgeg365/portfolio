@@ -47,8 +47,8 @@ export default function RootLayout({
       >
         <FloatingLayer />
         <GlobalAudioPlayer />
-        <nav className="w-full flex items-center justify-center gap-8 py-6 text-lg font-semibold bg-transparent relative z-50">
-          <div className="flex items-center gap-8 border-b-4 border-white/10 pb-6">
+        <nav className="relative z-50 flex w-full flex-col items-center justify-center gap-4 px-4 py-6 text-base font-semibold sm:flex-row sm:gap-8 sm:px-6 sm:text-lg">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 border-b-4 border-white/10 pb-4 text-center sm:gap-8 sm:pb-6">
             <Link href="/">Home</Link>
             <Link href="/about">About</Link>
             <Link href="/resume">Resume</Link>
