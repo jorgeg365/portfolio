@@ -34,16 +34,16 @@ export default function Projects() {
           <p className="mb-2">A step-by-step project for setting up a local phishing lab using GoPhish and MailHog on an Ubuntu VM. This guide covers installation, configuration, and running realistic phishing campaigns in a safe environment.</p>
           <a href="https://github.com/jorgeg365/jorgeg365-GoPhish-phishing-Campaign-with-Mailhog-local-testing-on-Ubuntu-VM" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:underline">View on GitHub</a>
         </div>
-        {/* Streamlining IoT File Transfers Project Card */}
+        {/* Hotel Business Network Project Card */}
         <div className="rounded-lg p-6 shadow-md relative z-20" style={{ background: "rgba(17,35,90,0.7)" }}>
           <div className="w-full mb-6 flex justify-center">
             <div className="relative overflow-hidden rounded-3xl transition-transform duration-200 ease-out hover:scale-105" style={{ height: 224, width: 224 }}>
-              <Image src="/filezilla.png" alt="FileZilla Logo" fill sizes="(max-width: 640px) 200px, 224px" className="object-contain" />
+              <Image src="/hotel-business-network-logo.svg" alt="Hotel Business Network logo" fill sizes="(max-width: 640px) 200px, 224px" className="object-contain" />
             </div>
           </div>
-          <h2 className="text-xl font-semibold mb-2">Streamlining IoT File Transfers: Setting Up an FTP Server for WyzeCam v2 and ESP32</h2>
-          <p className="mb-2">A step-by-step guide to setting up an FTP server for seamless file transfers between WyzeCam v2, ESP32, and your computer. Includes configuration for both Windows and IoT devices, with practical code examples and security tips.</p>
-          <a href="https://github.com/jorgeg365/Streamlining-IoT-File-Transfers-Setting-Up-an-FTP-Server-for-WyzeCam-v2-and-ESP32" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:underline">View on GitHub</a>
+          <h2 className="text-xl font-semibold mb-2">Hotel Business Network</h2>
+          <p className="mb-2">A hotel business network project focused on designing and organizing secure, reliable connectivity for hospitality operations, including segmented services, business systems, and practical network planning.</p>
+          <a href="https://github.com/jorgeg365/HotelBusinessNetwork" target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:underline">View on GitHub</a>
         </div>
         {/* Create Your Own Fighting Game Course Project Card */}
         <div className="rounded-lg p-6 shadow-md relative z-20" style={{ background: "rgba(17,35,90,0.7)" }}>
